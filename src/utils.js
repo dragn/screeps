@@ -33,16 +33,21 @@ module.exports = {
                 var name = this.createCreep(queue[i].body, queue[i].role + '_' + module.exports.random(8),
                                             { role: queue[i].role, base: this.name });
                 if (typeof name == 'string') {
-                    population[i] = name;
+                    population[i] = { name: name, missCount: 0 };
                 }
                 break; // can't go further by queue until this place is filled
             } else {
-                var creepName = population[i],
-                    creep = Game.creeps[creepName];
+                var creep = Game.creeps[population[i].name];
                 if (!creep) {
-                    console.log('Removing dead creep ' + creepName);
-                    population[i] = null;
+                    // simulation mode workaround
+                    population[i].missCount++;
+                } else {
+                    population[i].missCount = 0;
                 }
+            }
+            if (population[i].missCount >= 10) {
+                console.log('removing dead creep ' + population[i].name);
+                population[i] = null;
             }
         }
     },

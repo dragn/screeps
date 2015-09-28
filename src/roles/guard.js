@@ -1,8 +1,7 @@
 module.exports = function() {
     var enemy = this.pos.findClosestByRange(FIND_HOSTILE_CREEPS, {
         filter: function(object) {
-            console.log('Name: ' + object.name);
-            return object.name != 'Source Keeper';
+            return object.owner.username != 'Source Keeper';
         }
     });
     if (enemy) {
