@@ -12,13 +12,13 @@ module.exports = function() {
         }
     } else {
         if (!this.memory.patrol) {
-            var x = Math.floor(Math.random() * 50);
-            var y = Math.floor(Math.random() * 50);
+            var base = Game.spawns[this.memory.base];
+            var x = base.pos.x + (Math.random() > 0.5 ? 4 : -4);
+            var y = base.pos.y + (Math.random() > 0.5 ? 4 : -4);
             this.memory.patrol = { x: x, y: y };
         } else {
-            this.memory.lastPos = this.pos;
             this.moveTo(this.memory.patrol.x, this.memory.patrol.y);
-            if (this.pos == this.memory.lastPos) {
+            if (this.pos.isNearTo(this.memory.patrol.x, this.memory.patrol.y)) {
                 delete this.memory.patrol;
             }
         }
