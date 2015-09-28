@@ -28,18 +28,27 @@ module.exports = function() {
             return;
         }
 
-        var wall = this.pos.findClosestByRange(FIND_MY_STRUCTURES, {
+        var wall = this.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: function(obj) {
-                return obj.structureType == STRUCTURE_WALL && obj.hits < 500;
+                return obj.structureType == STRUCTURE_WALL && obj.hits < 2000;
             }
         });
         if (wall) {
             if (this.pos.isNearTo(wall)) {
-                this.build(wall);
+                this.repair(wall);
             } else {
                 this.moveTo(wall);
             }
             return;
+        }
+
+        var site = this.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
+        if (site) {
+            if (this.pos.isNearTo(site)) {
+                this.build(site);
+            } else {
+                this.moveTo(site);
+            }
         }
     }
 }

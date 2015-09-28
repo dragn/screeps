@@ -8,7 +8,7 @@ var creeps = [
     { body: [MOVE, CARRY, MOVE, CARRY, WORK], role: 'harvester' },
     { body: [TOUGH, TOUGH, ATTACK, MOVE, ATTACK, MOVE], role: 'guard' },
     { body: [MOVE, CARRY, MOVE, CARRY, WORK], role: 'upgrader' },
-    { body: [MOVE, CARRY, MOVE, CARRY, WORK], role: 'harvester' },
+    { body: [MOVE, CARRY, MOVE, CARRY, WORK], role: 'upgrader' },
     { body: [MOVE, CARRY, MOVE, CARRY, WORK], role: 'wall-builder' },
     { body: [MOVE, CARRY, MOVE, CARRY, WORK], role: 'wall-builder' },
     { body: [TOUGH, TOUGH, ATTACK, MOVE, ATTACK, MOVE], role: 'guard' }
