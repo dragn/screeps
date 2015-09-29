@@ -1,28 +1,24 @@
+var utils = require('utils');
+
 module.exports = function() {
+    var base = Game.spawns[this.memory.base];
+
     if (this.carry.energy < this.carryCapacity) {
-        var targets = this.room.find(FIND_SOURCES);
-        if (targets.length) {
-            var source = targets[0];
-            if (this.pos.isNearTo(source)) {
-                this.harvest(source);
-            } else {
-                this.moveTo(source);
-            }
-        }
-    } else {
-        var base = Game.spawns[this.memory.base];
-        if (base.energy == base.energyCapacity) {
-            base = this.pos.findClosestByRange(FIND_MY_STRUCTURES, {
-                filter: function(object) {
-                    return object.structureType == STRUCTURE_EXTENSION &&
-                        object.energy < object.energyCapacity;
-                }
-            });
-        }
-        if (this.pos.isNearTo(base)) {
-            this.transferEnergy(base);
+        var source = utils.findClosestCached(this, '_source', FIND_SOURCES);
+        if (utils.moveToHarvest(this, source)) return;
+    }
+
+    if (base.energy == base.energyCapacity) {
+        var ext = this.pos.findClosestByRange(FIND_MY_STRUCTURES, {
+            filter: (object) => object.structureType == STRUCTURE_EXTENSION &&
+                    object.energy < object.energyCapacity
+        });
+        if (ext) {
+            if (utils.moveToGiveEnergy(this, ext)) return;
         } else {
-            this.moveTo(base);
+            return this.moveTo(base);
         }
     }
+
+    utils.moveToGiveEnergy(this, base);
 };

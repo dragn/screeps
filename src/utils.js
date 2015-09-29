@@ -1,11 +1,23 @@
+function moveAndDo(creep, target, action) {
+    if (!target) return false;
+    //console.log('moveAndDo ' + creep.name + ' ' + target.pos.x + 'x' + target.pos.y + ' ' + action);
+    if (creep.pos.isNearTo(target)) {
+        var action =  creep[action](target);
+        //console.log('action ' + action);
+        return action == 0;
+    } else {
+        var move = creep.moveTo(target);
+        //console.log('move ' + move);
+        return move == 0;
+    }
+};
+
 module.exports = {
 
     /**
      * Pick a random alphanumeric string of length `len`
      */
-    random: function(len) {
-        return Math.random().toString(36).substr(2, len);
-    },
+    random: (len) => Math.random().toString(36).substr(2, len),
 
     /**
      * Clean up dead creeps memory
@@ -68,5 +80,30 @@ module.exports = {
         }
 
         return fullPath;
+    },
+
+    moveToAttack:       (creep, target) => moveAndDo(creep, target, 'attack'),
+    moveToRepair:       (creep, target) => moveAndDo(creep, target, 'repair'),
+    moveToBuild:        (creep, target) => moveAndDo(creep, target, 'build'),
+    moveToHeal:         (creep, target) => moveAndDo(creep, target, 'heal'),
+    moveToHarvest:      (creep, target) => moveAndDo(creep, target, 'harvest'),
+    moveToGiveEnergy:   (creep, target) => moveAndDo(creep, target, 'transferEnergy'),
+    moveToPickup:       (creep, target) => moveAndDo(creep, target, 'pickup'),
+    moveToUpgrade:      (creep, target) => moveAndDo(creep, target, 'upgradeController'),
+
+    moveToTakeEnergy: function(creep, target) {
+        if (creep.pos.isNearTo(target)) {
+            return target.transferEnergy(creep) == 0;
+        } else {
+            return creep.moveTo(target) == 0;
+        }
+    },
+
+    findClosestCached: function(creep, cacheName, type) {
+        if (!creep.memory[cacheName]) {
+            var find = creep.pos.findClosestByPath(type);
+            if (find) creep.memory[cacheName] = find.id;
+        }
+        return Game.getObjectById(creep.memory[cacheName]);
     }
 };
