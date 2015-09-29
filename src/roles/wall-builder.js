@@ -30,7 +30,7 @@ module.exports = function() {
 
         var wall = this.pos.findClosestByRange(FIND_STRUCTURES, {
             filter: function(obj) {
-                return obj.structureType == STRUCTURE_WALL && obj.hits < 2000;
+                return obj.structureType == STRUCTURE_WALL && obj.hits < 10000;
             }
         });
         if (wall) {

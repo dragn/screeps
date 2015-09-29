@@ -4,7 +4,7 @@ module.exports = function() {
     var base = Game.spawns[this.memory.base];
     var controller = base.room.controller;
 
-    if (this.carry.energy < this.carryCapacity && !this.pos.isNearTo(controller)) {
+    if ((this.carry.energy < this.carryCapacity && !this.pos.isNearTo(controller)) || this.carry.energy == 0) {
         var source = this.pos.findClosestByPath(FIND_SOURCES);
         if (source) {
             if (this.pos.isNearTo(source)) {

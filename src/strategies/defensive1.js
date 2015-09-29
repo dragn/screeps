@@ -1,7 +1,7 @@
 var utils = require('utils');
 
 var creeps = [
-    { body: [MOVE, CARRY, WORK], role: 'harvester' },
+    //{ body: [MOVE, CARRY, WORK], role: 'harvester' },
     { body: [MOVE, CARRY, WORK], role: 'harvester' },
     { body: [MOVE, MOVE, ATTACK], role: 'guard' },
     { body: [MOVE, CARRY, MOVE, CARRY, WORK], role: 'upgrader' },
